@@ -1,0 +1,36 @@
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="sub-container">
+      <label for="address" class="label">Your Address</label>
+      <input type="text" id="address" class="input" placeholder="0x12345...890" formControlName="userAddress" required>
+    </div>
+
+    <div class="two-fields">
+      <div>
+        <label for="tokenName" class="label">Token Name</label>
+        <input type="text" id="tokenName" class="input" placeholder="MyToken" formControlName="tokenName" required>
+      </div>
+
+      <div>
+        <label for="tokenSymbol" class="label">Token Symbol</label>
+        <input type="text" id="tokenSymbol" class="input" placeholder="MTK" formControlName="tokenSymbol" required>
+      </div>
+    </div>
+
+    <div class="two-fields">
+      <div>
+        <label for="decimals" class="label">Decimals</label>
+        <input type="text" id="decimals" class="input" placeholder="18" formControlName="decimals" required>
+      </div>
+
+      <div>
+        <label for="eventName" class="label">Event Name</label>
+        <input type="text" id="eventName" class="input" placeholder="Mobius" formControlName="eventName" required>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <button type="submit" class="btn">Create Token</button>
+    </div>
+  </form>
+</div>

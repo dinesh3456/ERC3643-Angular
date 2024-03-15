@@ -1,0 +1,23 @@
+<div class="container">
+  <form [formGroup]="myForm" (ngSubmit)="createClaimIssuer()">
+    <div class="sub-container">
+      <label for="address" class="label">Your Address</label>
+      <input
+        type="text"
+        formControlName="userAddress"
+        id="address"
+        name="address"
+        class="input"
+        placeholder="0x12345...890"
+        required
+      />
+    </div>
+
+    <div class="btn-container">
+      <button type="submit" class="btn">Create Claim Issuer</button>
+      <div *ngIf="idCreated" class="address-toast">
+        {{ myForm.get("userAddress")?.value ? claimIssuerAddressMessage : "" }}
+      </div>
+    </div>
+  </form>
+</div>

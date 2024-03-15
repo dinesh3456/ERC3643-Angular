@@ -1,0 +1,7 @@
+<div class="sidebar-container">
+  <div class="sub-container">
+    <div *ngFor="let button of buttons">
+      <button (click)="navigateToUrl(button.path)">{{button.name}}</button>
+    </div>
+  </div>
+</div>
