@@ -3,7 +3,7 @@
 pragma solidity 0.8.17;
 //import "@openzeppelin/contracts/access/Ownable.sol";
 import "./factory1.sol";
-
+import "./Ifactory.sol";
 
 contract ofactory is Ifactory {
     struct Contracts {

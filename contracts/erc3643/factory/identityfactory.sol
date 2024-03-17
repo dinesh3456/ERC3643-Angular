@@ -13,12 +13,11 @@ contract factory{
         require(!isregisteredIdentity[_useraddress],"you are already registered");
         require(msg.value >= 0.001 ether, "Insufficient payment for identity creation");
 
-      identities _identity = new identities(_useraddress);
-      address _identityAddress = address(_identity);
-      usertoidentity[_useraddress]=_address;
+        address _address=address(new identities(_useraddress));
+        usertoidentity[_useraddress]=_address;
          isregisteredIdentity[_useraddress]=true;
 
-        return _identityAddress;
+        return _address;
     }
 
     function getidentity(address _useraddress) public view returns(address){
@@ -26,9 +25,11 @@ contract factory{
     }
 
 
+
     function createClaimIssuer(address _useraddress) public returns(address){
         require(!isregisteredClaimIssuer[_useraddress],"you are already registered");
-        address _address=address(new ClaimIssuers(_useraddress));
+        ClaimIssuers newClaimIssuer = new ClaimIssuers(_useraddress);
+        address _address = address(newClaimIssuer);
         usertoclaimIssuer[_useraddress]=_address;
          isregisteredClaimIssuer[_useraddress]=true;
 
