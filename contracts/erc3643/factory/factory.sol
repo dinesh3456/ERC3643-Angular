@@ -5,7 +5,7 @@ pragma solidity 0.8.17;
 import "./factory1.sol";
 
 
-contract ofactory is Ifactory {
+contract ofactory {
     struct Contracts {
         address tokenImplementation;
         address irImplementation;
