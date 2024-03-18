@@ -5,7 +5,7 @@ import { CreateClaimIssuerComponent } from './components/SidebarComponents/creat
 import { CreateTokenComponent } from './components/SidebarComponents/create-token/create-token.component';
 
 const routes: Routes = [
-  { path: 'create-identity', component: CreateIdentityComponent },
+  { path: '', component: CreateIdentityComponent },
   { path: 'create-claim-issuer', component: CreateClaimIssuerComponent },
   { path: 'create-token', component: CreateTokenComponent },
 ];
