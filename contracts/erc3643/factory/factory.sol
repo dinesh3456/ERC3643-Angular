@@ -4,8 +4,11 @@ pragma solidity 0.8.17;
 //import "@openzeppelin/contracts/access/Ownable.sol";
 import "./factory1.sol";
 import "./Ifactory.sol";
+import "../compliance/ICompliance.sol";//contracts/erc3643/compliance/ICompliance.sol
+import "../token/Itoken.sol";
+import "../token/token.sol";
 
-contract ofactory is Ifactory {
+contract factory is Ifactory {
     struct Contracts {
         address tokenImplementation;
         address irImplementation;
@@ -15,9 +18,14 @@ contract ofactory is Ifactory {
         address tirImplementation;
     }
 
-    uint256 public salt;
+    event ContractDeployed(address indexed contractAddress, address indexed owner);
+    event OwnerExists(address indexed owner);
+    event ContractCreated(address indexed contractAddress);
+
+    uint256 public salt = 1;
     factory2 x = new factory2();
     address[] owners;
+
 
     mapping(address => mapping(uint256 => Contracts)) public alldata;
     mapping(address => uint256) ownertoken;
@@ -37,7 +45,6 @@ contract ofactory is Ifactory {
                 revert(0, 0)
             }
         }
-
         return addr;
     }
 
@@ -47,7 +54,10 @@ contract ofactory is Ifactory {
         string memory symbol,
         uint256 decimal,
         address onchainId
-    ) public returns (address) {
+    ) public payable returns (address) {
+        emit OwnerExists(_owner);
+        require(msg.value >= 0.001 ether, "Insufficient payment for identity creation");
+
         address _owners = _owner;
         salt++;
 
@@ -125,6 +135,8 @@ contract ofactory is Ifactory {
         //(Ownable(address(ir))).transferOwnership(_owners);
         (Ownable(address(ctr))).transferOwnership(_owners);
         (Ownable(address(cir))).transferOwnership(_owners);
+        emit ContractDeployed(address(it), _owners);
+
         return address(it);
     }
 
@@ -157,4 +169,6 @@ contract ofactory is Ifactory {
         bytes memory bytecode = abi.encodePacked(_code, _constructData);
         return _deploy(_salt, bytecode);
     }
+
+    
 }

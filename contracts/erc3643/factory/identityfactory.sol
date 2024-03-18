@@ -23,13 +23,15 @@ contract factory{
     function getidentity(address _useraddress) public view returns(address){
         return usertoidentity[_useraddress];
     }
+    
 
-
+// identities _identity = new identities(_useraddress);
+//       address _identityAddress = address(_identity);
+//       usertoidentity[_useraddress]=_address;
 
     function createClaimIssuer(address _useraddress) public returns(address){
         require(!isregisteredClaimIssuer[_useraddress],"you are already registered");
-        ClaimIssuers newClaimIssuer = new ClaimIssuers(_useraddress);
-        address _address = address(newClaimIssuer);
+        address _address=address(new ClaimIssuers(_useraddress));
         usertoclaimIssuer[_useraddress]=_address;
          isregisteredClaimIssuer[_useraddress]=true;
 
