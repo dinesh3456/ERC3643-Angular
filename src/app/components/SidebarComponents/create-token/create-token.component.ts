@@ -2,6 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignService } from '../../../services/sign.service';
 import { Subscription } from 'rxjs';
+import { ethers } from 'ethers';
+
+import contractAbi from '../../../abi/factoryToken.json';
+import { bytecode } from '../../../bytecode/factoryToken.js';
+
+// 0x2E51e10cD104fFA6E8CAa5df1810262a61fA3a48
+
+interface CustomWindow extends Window {
+  ethereum?: any;
+}
 
 @Component({
   selector: 'app-create-token',
@@ -10,9 +20,12 @@ import { Subscription } from 'rxjs';
 })
 export class CreateTokenComponent implements OnInit, OnDestroy {
   myForm!: FormGroup;
-  userAddress: string = '';
 
+  userAddress: string = '';
   private addressSubscription!: Subscription;
+
+  signer: any;
+  private signerSubscription!: Subscription;
 
   constructor(private fb: FormBuilder, private signService: SignService) {}
 
@@ -22,18 +35,22 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
       tokenName: ['', Validators.required],
       tokenSymbol: ['', Validators.required],
       decimals: ['', Validators.required],
-      eventName: ['', Validators.required],
+      onchainId: ['', Validators.required],
     });
 
     this.addressSubscription = this.signService.address$.subscribe(
       (address) => {
         this.userAddress = address;
-        
+
         this.myForm.patchValue({
-          userAddress: address
+          userAddress: address,
         });
       }
     );
+
+    this.signerSubscription = this.signService.signer$.subscribe((signer) => {
+      this.signer = signer;
+    });
   }
 
   onSubmit() {
@@ -47,5 +64,54 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.addressSubscription.unsubscribe();
+  }
+
+  async createToken() {
+    try {
+      var owner = this.userAddress;
+      var name = this.myForm.value.tokenName;
+      var symbol = this.myForm.value.tokenSymbol;
+      var decimals = this.myForm.value.decimals;
+      var onchainId = this.myForm.value.onchainId;
+
+      const ethereum = (window as CustomWindow).ethereum;
+      let account = '';
+
+      if (ethereum !== undefined) {
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts',
+        });
+        account = accounts[0];
+        console.log(account);
+        console.log('here is the user address:', this.userAddress);
+      }
+
+      const contractAddress = "0x2E51e10cD104fFA6E8CAa5df1810262a61fA3a48";
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const contractFactory = new ethers.Contract(
+        contractAddress,
+        contractAbi,
+        provider
+      );
+      // const contract = await contractFactory.deploy();
+      // await contract.deployed();
+      //console.log('here is the contract address:', contract.address);
+
+      // const tx = await contract['deployall'](owner, name, symbol, decimals, onchainId);
+      const tx = await contractFactory
+        .connect(this.signer)
+        ['deployall'](owner, name, symbol, decimals, onchainId, {
+          gasLimit: 30000000,
+        });
+
+      await tx.wait();
+      console.log('here is the transaction details:', tx);
+
+      //const tx1 = await contract['alldata'](owner, )
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

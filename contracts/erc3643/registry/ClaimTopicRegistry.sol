@@ -7,6 +7,8 @@ import "./interface/IClaimTopicsRegistry.sol";
 /// @title ERC-3643 - ClaimTopicsRegistry
 /// @dev A registry for managing claim topics.
 contract ClaimTopicsRegistry is IClaimTopicsRegistry, Ownable {
+
+    constructor(address initialOwner) Ownable(initialOwner) {}
     /// @dev An array to hold all required claim topics.
     uint256[] private _claimTopics;
 

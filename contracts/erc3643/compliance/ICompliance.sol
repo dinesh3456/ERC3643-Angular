@@ -25,11 +25,11 @@ interface ICompliance {
         uint256 _amount
     ) external;
 
-    function created(address _to, uint256 _amount) external;
+    function created(address _to, uint256 _amount) external  ;
 
-    function destroyed(address _from, uint256 _amount) external;
+    function destroyed(address _from, uint256 _amount) external ;
 
-    function isTokenAgent(address _agentAddress) external view returns (bool);
+    function isTokenAgent(address _agentAddress) external  view returns (bool);
 
     function isTokenBound(address _token) external view returns (bool);
 

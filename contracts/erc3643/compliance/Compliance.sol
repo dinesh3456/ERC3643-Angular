@@ -7,7 +7,9 @@ import "../token/token.sol";
 import "../token/Itoken.sol";
 
 
-abstract contract BasicComplaince is Ownable, ICompliance {
+contract BasicComplaince is Ownable, ICompliance {
+
+    constructor(address initialOwner) Ownable(initialOwner){}
 
 //Mapping    
     mapping(address => bool) private _tokenAgentlist;
@@ -81,5 +83,14 @@ abstract contract BasicComplaince is Ownable, ICompliance {
         return tokenBound.identityRegistry().investorCountry(_userAddress);
     }
 
+    function created(address _to, uint256 _amount) external virtual override {}
+
+    function destroyed(address _from, uint256 _amount) external virtual override {}
+
+    function transferred(address _from, address _to, uint256 _value) external virtual  override {}
+
+    function canTransfer(address /*_from*/, address /*_to*/, uint256 /*_value*/) external virtual pure override returns (bool) {
+        return true;
+    }
 
 }

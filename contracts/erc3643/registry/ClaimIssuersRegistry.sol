@@ -8,6 +8,8 @@ import "./interface/IClaimIssuersRegistry.sol";
 /// @title ERC-3643 - ClaimIssuersRegistry
 /// @dev This contract maintains a registry of claim issuers and their associated claim topics for the ERC-3643 standard.
 contract ClaimIssuersRegistry is IClaimIssuersRegistry, Ownable {
+
+    constructor(address initialOwner) Ownable(initialOwner){}
     /// @dev Array containing all ClaimIssuers identity contract address.
     IClaimIssuer[] private _claimIssuers;
 
