@@ -36,6 +36,8 @@ export class CreateIdentityComponent implements OnInit {
   idCreated: boolean = false;
   identityAddressMessage: string = '';
 
+  isLoading: boolean = false
+
   constructor(private signService: SignService, private fb: FormBuilder, private id: IdentityService) {
     this.idCreated = false;
   }
@@ -61,32 +63,41 @@ export class CreateIdentityComponent implements OnInit {
   }
 
   async createIdentity() {
-    if (!this.myForm.get('userAddress')?.value.trim()) {
-      alert('Please enter a valid user address.');
-      return;
+    console.log(this.myForm)
+    this.isLoading = true
+
+    try {
+      if (!this.myForm.get('userAddress')?.value.trim()) {
+        alert('Please enter a valid user address.');
+        return;
+      }
+  
+      const provider = new ethers.providers.Web3Provider(
+        (window as any).ethereum
+      );
+  
+      const identityFactory = new ethers.ContractFactory(
+        ONCHAINID.contracts.Identity.abi,
+        ONCHAINID.contracts.Identity.bytecode,
+        this.signer
+      );
+  
+      const identity = await identityFactory.deploy(
+        this.userAddress,
+        false
+      );
+      await identity.deployed();
+  
+      console.log('Identity deployed to:', identity.address);
+  
+      this.identityAddressMessage = 'Identity deployed to: ' + identity.address;
+  
+      this.id.updateIdentity(identity)
+    } catch (error) {
+      console.log(error)
     }
 
-    const provider = new ethers.providers.Web3Provider(
-      (window as any).ethereum
-    );
-
-    const identityFactory = new ethers.ContractFactory(
-      ONCHAINID.contracts.Identity.abi,
-      ONCHAINID.contracts.Identity.bytecode,
-      this.signer
-    );
-
-    const identity = await identityFactory.deploy(
-      this.userAddress,
-      false
-    );
-    await identity.deployed();
-
-    console.log('Identity deployed to:', identity.address);
-
-    this.identityAddressMessage = 'Identity deployed to: ' + identity.address;
-
-    this.id.updateIdentity(identity)
+    this.isLoading = false
 
     //Identity deployed to: 0xDa81baE19a28618557aB2393E4e0E3C26dc1b3c8
 

@@ -8,7 +8,8 @@ import "../compliance/ICompliance.sol";//contracts/erc3643/compliance/IComplianc
 import "../token/Itoken.sol";
 import "../token/token.sol";
 
-contract factory is Ifactory {
+
+contract ofactory {
     struct Contracts {
         address tokenImplementation;
         address irImplementation;
@@ -170,5 +171,5 @@ contract factory is Ifactory {
         return _deploy(_salt, bytecode);
     }
 
-    
+
 }

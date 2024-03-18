@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   buttons: Array<any> = [
-    { name: "Create Identity", path: "/create-identity" },
+    { name: "Create Identity", path: "/" },
     { name: "Create Claim Issuer", path: "/create-claim-issuer" },
     { name: "Create Token", path: "/create-token" },
   ]

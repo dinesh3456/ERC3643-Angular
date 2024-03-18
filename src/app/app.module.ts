@@ -17,6 +17,7 @@ import { ConnectWalletButtonComponent } from './components/navbar/connect-wallet
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainComponent } from './components/main/main.component';
 import { CreateTokenComponent } from './components/SidebarComponents/create-token/create-token.component';
+import { LoaderComponent } from './components/home/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CreateTokenComponent } from './components/SidebarComponents/create-toke
     SidebarComponent,
     MainComponent,
     CreateTokenComponent,
+    LoaderComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
   providers: [provideClientHydration()],
