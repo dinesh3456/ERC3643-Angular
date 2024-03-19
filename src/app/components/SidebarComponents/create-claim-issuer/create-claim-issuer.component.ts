@@ -116,4 +116,9 @@ export class CreateClaimIssuerComponent {
       this.isLoading = false;
     }
   }
+
+  ngOnDestroy(): void {
+    this.signerSubscription.unsubscribe();
+    this.addressSubscription.unsubscribe();
+  }
 }
