@@ -34,6 +34,8 @@ export class CreateClaimIssuerComponent {
   idCreated: boolean = false;
   claimIssuerAddressMessage: string = '';
 
+  isLoading: boolean = false;
+
   constructor(
     private signService: SignService,
     private fb: FormBuilder,
@@ -67,6 +69,7 @@ export class CreateClaimIssuerComponent {
   }
 
   async createClaimIssuer() {
+    this.isLoading = true;
     try {
       const customWindow = window as CustomWindow;
       let account = '';
@@ -106,8 +109,16 @@ export class CreateClaimIssuerComponent {
       console.log('Claim issuer address:', claimIssuerAddress);
       this.claimIssuerAddressMessage =
         'Claim issuer created with address: ' + claimIssuerAddress;
+
+      this.isLoading = false;
     } catch (error) {
       console.error('Error:', error);
+      this.isLoading = false;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.signerSubscription.unsubscribe();
+    this.addressSubscription.unsubscribe();
   }
 }

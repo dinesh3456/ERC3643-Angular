@@ -25,6 +25,8 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
   signer: any;
   private signerSubscription!: Subscription;
 
+  isLoading: boolean = false
+
   constructor(private fb: FormBuilder, private signService: SignService) {}
 
   ngOnInit(): void {
@@ -66,6 +68,9 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
   }
 
   async createToken() {
+    this.isLoading = true
+    this.onSubmit()
+
     try {
       var owner = this.userAddress;
       var name = this.myForm.value.tokenName;
@@ -103,8 +108,10 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
 
       await tx.wait();
       console.log('here is the transaction details:', tx);
+      this.isLoading = false
     } catch (error) {
       console.error(error);
+      this.isLoading = false
     }
   }
 }
