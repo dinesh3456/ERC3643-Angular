@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SignService } from '../../../services/sign.service';
+
 import { Subscription } from 'rxjs';
+import { SignService } from '../../../services/sign.service';
+
 import { ethers } from 'ethers';
-
 import contractAbi from '../../../abi/factoryToken.json';
-import { bytecode } from '../../../bytecode/factoryToken.js';
-
-// 0x2E51e10cD104fFA6E8CAa5df1810262a61fA3a48
 
 interface CustomWindow extends Window {
   ethereum?: any;
@@ -64,6 +62,7 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.addressSubscription.unsubscribe();
+    this.signerSubscription.unsubscribe();
   }
 
   async createToken() {
@@ -86,7 +85,7 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
         console.log('here is the user address:', this.userAddress);
       }
 
-      const contractAddress = "0x2E51e10cD104fFA6E8CAa5df1810262a61fA3a48";
+      const contractAddress = '0x2E51e10cD104fFA6E8CAa5df1810262a61fA3a48';
 
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
@@ -95,11 +94,7 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
         contractAbi,
         provider
       );
-      // const contract = await contractFactory.deploy();
-      // await contract.deployed();
-      //console.log('here is the contract address:', contract.address);
 
-      // const tx = await contract['deployall'](owner, name, symbol, decimals, onchainId);
       const tx = await contractFactory
         .connect(this.signer)
         ['deployall'](owner, name, symbol, decimals, onchainId, {
@@ -108,8 +103,6 @@ export class CreateTokenComponent implements OnInit, OnDestroy {
 
       await tx.wait();
       console.log('here is the transaction details:', tx);
-
-      //const tx1 = await contract['alldata'](owner, )
     } catch (error) {
       console.error(error);
     }

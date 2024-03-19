@@ -2,30 +2,70 @@
   <form [formGroup]="myForm" (ngSubmit)="createToken()">
     <div class="sub-container">
       <label for="address" class="label">Your Address</label>
-      <input type="text" id="address" class="input" placeholder="0x12345...890" formControlName="userAddress" required>
+      <input
+        type="text"
+        id="address"
+        class="input"
+        placeholder="0x12345...890"
+        formControlName="userAddress"
+        autocomplete="off"
+        required
+      />
     </div>
 
     <div class="two-fields">
       <div>
         <label for="tokenName" class="label">Token Name</label>
-        <input type="text" id="tokenName" class="input" placeholder="MyToken" formControlName="tokenName" required>
+        <input
+          type="text"
+          id="tokenName"
+          class="input"
+          placeholder="MyToken"
+          formControlName="tokenName"
+          autocomplete="off"
+          required
+        />
       </div>
 
       <div>
         <label for="tokenSymbol" class="label">Token Symbol</label>
-        <input type="text" id="tokenSymbol" class="input" placeholder="MTK" formControlName="tokenSymbol" required>
+        <input
+          type="text"
+          id="tokenSymbol"
+          class="input"
+          placeholder="MTK"
+          formControlName="tokenSymbol"
+          autocomplete="off"
+          required
+        />
       </div>
     </div>
 
     <div class="two-fields">
       <div>
         <label for="decimals" class="label">Decimals</label>
-        <input type="text" id="decimals" class="input" placeholder="18" formControlName="decimals" required>
+        <input
+          type="text"
+          id="decimals"
+          class="input"
+          placeholder="18"
+          formControlName="decimals"
+          autocomplete="off"
+          required
+        />
       </div>
 
       <div>
         <label for="onchainId" class="label">OnchainId</label>
-        <input type="text" id="onchainId" class="input" placeholder="0x00000" formControlName="onchainId" required>
+        <input
+          type="text"
+          id="onchainId"
+          class="input"
+          placeholder="0x00000"
+          formControlName="onchainId"
+          autocomplete="off"
+          required
+        />
       </div>
     </div>
 
