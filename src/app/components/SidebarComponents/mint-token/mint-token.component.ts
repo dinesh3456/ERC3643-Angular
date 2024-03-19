@@ -22,6 +22,8 @@ export class MintTokenComponent {
   signer: any;
   private signerSubscription!: Subscription;
 
+  isLoading: boolean = false
+
   constructor(private fb: FormBuilder, private signService: SignService) {}
 
   ngOnInit(): void {
