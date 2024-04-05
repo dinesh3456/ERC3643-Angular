@@ -1,14 +1,17 @@
 const hre = require("hardhat");
 const { ethers } = require('ethers');
+const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 
 
-async function main() {
+
+
+//async function main() {
   // Deploy each contract individually
-  const Identityfactory = await hre.ethers.getContractFactory("TrustedIssuersRegistry");
-  const identityfactory = await Identityfactory.deploy();
+  // const Identityfactory = await hre.ethers.getContractFactory("TrustedIssuersRegistry");
+  // const identityfactory = await Identityfactory.deploy();
 
-  await identityfactory.waitForDeployment();
-  console.log("Trusted Issuer Registry deployed to:", identityfactory.target);
+  // await identityfactory.waitForDeployment();
+  // console.log("Trusted Issuer Registry deployed to:", identityfactory.target);
 
   // const factory = await hre.ethers.getContractFactory("ofactory");
   // const Ofactory = await factory.deploy();
@@ -16,9 +19,14 @@ async function main() {
   // await Ofactory.waitForDeployment();
   // console.log("ofactory deployed to:", Ofactory.target);
 
-}
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
+//}
+
+
+const FactoryModule = buildModule("FactoryModule", (m) => {
+  const factory = m.contract("ofactory");
+
+  return { factory };
 });
+
+module.exports = FactoryModule ;
