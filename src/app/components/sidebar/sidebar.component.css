@@ -24,3 +24,13 @@ button {
   border-radius: 10px;
   font-weight: 600;
 }
+
+button.active {
+  background-color: #5c77d8;
+  color: #f5f5f5;
+}
+
+button:hover {
+  background-color: #8396d5;
+  color: #f5f5f5;
+}

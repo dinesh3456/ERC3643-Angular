@@ -18,6 +18,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MainComponent } from './components/main/main.component';
 import { CreateTokenComponent } from './components/SidebarComponents/create-token/create-token.component';
 import { LoaderComponent } from './components/home/loader/loader.component';
+import { MintTokenComponent } from './components/SidebarComponents/mint-token/mint-token.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LoaderComponent } from './components/home/loader/loader.component';
     MainComponent,
     CreateTokenComponent,
     LoaderComponent,
+    MintTokenComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
   providers: [provideClientHydration()],
