@@ -25,5 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# erc-3643-angular
-# erc-3643-angular
+
+# hardhat Ignition
+
+npm install --save-dev @nomicfoundation/hardhat-ignition-ethers
+
+# To deploy the smart contract using the hardhat ignition
+
+npx hardhat ignition deploy ignition/modules/Apollo.ts --network localhost
+
+
